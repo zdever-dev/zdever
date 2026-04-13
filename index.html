@@ -1251,15 +1251,24 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
 function openModal() {
   const m = document.getElementById('modal-ov');
   m.style.display = 'flex';
-  document.body.style.overflow = 'hidden';
+  // Zafixuj body — ulož scroll pozici a zablokuj
+  const scrollY = window.scrollY;
+  document.body.style.position = 'fixed';
+  document.body.style.top = `-${scrollY}px`;
+  document.body.style.width = '100%';
+  document.body.dataset.scrollY = scrollY;
   if (window.visualViewport) handleViewport();
   setTimeout(() => { m.scrollTop = 0; }, 50);
 }
-
 function closeModal() {
   const m = document.getElementById('modal-ov');
   m.style.display = 'none';
-  document.body.style.overflow = '';
+  // Obnov scroll pozici
+  const scrollY = parseInt(document.body.dataset.scrollY || '0');
+  document.body.style.position = '';
+  document.body.style.top = '';
+  document.body.style.width = '';
+  window.scrollTo(0, scrollY);
   if (window.visualViewport) {
     window.visualViewport.removeEventListener('resize', handleViewport);
   }
