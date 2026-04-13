@@ -588,7 +588,7 @@ section { padding: 88px 36px; }
   box-shadow: var(--shadow);
   display: flex; flex-direction: column; justify-content: center;
 }
-.kont-cta h3 { font-family: var(--font-d); font-size: 24px; font-weight: 800; color: var(--navy); margin-bottom: 10px; letter-spacing: -.5px; }
+.kont-cta h3 { font-family: var(--font-d); font-size: 20px; font-weight: 600; color: var(--navy); margin-bottom: 10px; letter-spacing: 0px; }
 .kont-cta p  { font-size: 14px; color: var(--muted); margin-bottom: 24px; line-height: 1.7; }
 .free-note {
   display: inline-flex; align-items: center; gap: 7px;
@@ -1210,10 +1210,10 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
   });
 });
 </script>
-   <div id="modal-ov" style="display:none;position:fixed;inset:0;background:rgba(28,42,74,.6);z-index:300;backdrop-filter:blur(3px);align-items:flex-start;justify-content:center;padding:20px 0;overflow-y:auto;">
+   <div id="modal-ov" style="display:none;position:fixed;inset:0;background:rgba(28,42,74,.6);z-index:300;backdrop-filter:blur(3px);align-items:flex-start;justify-content:center;padding:20px 0;overflow-y:auto;height:100%;">
   <div style="background:#fff;border-radius:16px;padding:28px 24px;max-width:480px;width:90%;position:relative;box-shadow:0 20px 60px rgba(28,42,74,.25);margin:auto;">
     <button onclick="closeModal()" style="position:absolute;top:14px;right:16px;border:none;background:none;font-size:22px;cursor:pointer;color:#6b7a99;">✕</button>
-    <h3 style="font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:#1C2A4A;margin-bottom:8px;">Napsat zprávu</h3>
+    <h3 style="font-family:'Syne',sans-serif;font-size:20px;font-weight600;letter-spacing:0px;color:#1C2A4A;margin-bottom:8px;">Napsat zprávu</h3>
     <p style="font-size:13px;color:#6b7a99;margin-bottom:22px;">Vyplň formulář — ozvu se co nejdřív. Diagnostika je zdarma.</p>
     
     <form id="contact-form" action="https://api.web3forms.com/submit" method="POST">
@@ -1252,12 +1252,49 @@ function openModal() {
   const m = document.getElementById('modal-ov');
   m.style.display = 'flex';
   document.body.style.overflow = 'hidden';
+  
+  // Při otevření scrollni modal na vrch
+  setTimeout(() => {
+    m.scrollTop = 0;
+  }, 50);
 }
+
 function closeModal() {
   const m = document.getElementById('modal-ov');
   m.style.display = 'none';
   document.body.style.overflow = '';
+  if (window.visualViewport) {
+    window.visualViewport.removeEventListener('resize', handleViewport);
+  }
 }
+
+function handleViewport() {
+  const m = document.getElementById('modal-ov');
+  if (!m || m.style.display === 'none') return;
+  // Výška viditelné oblasti = viewport minus klávesnice
+  const vh = window.visualViewport.height;
+  m.style.height = vh + 'px';
+  m.style.top = window.visualViewport.offsetTop + 'px';
+}
+
+// Spusť listener při otevření modalu
+document.getElementById('modal-ov').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
+
+// Přidej focus listener na inputy — scrollne aktivní pole do view
+document.querySelectorAll('#contact-form input, #contact-form textarea').forEach(el => {
+  el.addEventListener('focus', function() {
+    setTimeout(() => {
+      this.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }, 350);
+  });
+});
+
+if (window.visualViewport) {
+  window.visualViewport.addEventListener('resize', handleViewport);
+}
+   
 document.getElementById('modal-ov').addEventListener('click', function(e) {
   if (e.target === this) closeModal();
 });
