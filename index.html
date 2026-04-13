@@ -1265,6 +1265,15 @@ function closeModal() {
   }
 }
 
+   const modalOv = document.getElementById('modal-ov');
+
+modalOv.addEventListener('touchmove', function(e) {
+  // Pokud scroll přišel přímo z overlayu (ne z vnitřního obsahu), zastav ho
+  if (e.target === modalOv) {
+    e.preventDefault();
+  }
+}, { passive: false });
+
 function handleViewport() {
   const m = document.getElementById('modal-ov');
   if (!m || m.style.display === 'none') return;
