@@ -316,10 +316,10 @@ main { padding-top: var(--hh); }
 .hero-h1 {
   font-family: var(--font-d);
   font-size: clamp(36px, 5.5vw, 70px);
-  font-weight: 800;
+  font-weight: 700;
   color: #fff;
   line-height: 1.04;
-  letter-spacing: -2.5px;
+  letter-spacing: -1px;
   margin-bottom: 22px;
   max-width: 740px;
 }
@@ -386,8 +386,8 @@ section { padding: 88px 36px; }
 .s-title {
   font-family: var(--font-d);
   font-size: clamp(26px, 3.5vw, 44px);
-  font-weight: 800; color: var(--navy);
-  letter-spacing: -1.2px; line-height: 1.08;
+  font-weight: 700; color: var(--navy);
+  letter-spacing: -.3px; line-height: 1.08;
   margin-bottom: 14px;
 }
 .s-desc { font-size: 16px; color: var(--muted); max-width: 560px; line-height: 1.75; margin-bottom: 48px; font-weight: 300; }
@@ -1069,9 +1069,17 @@ footer::before {
           <div class="k-ic">📘</div>
           <div>
             <div class="k-l">Facebook</div>
-            <a href="#" class="k-v">ZdeVer Repair</a>
+            <a href="https://www.facebook.com/TVOJE_STRANKA_SEM" target="_blank" class="k-v">ZdeVer Repair</a>
             <div class="k-n">Facebook skupiny, zprávy, inzeráty</div>
           </div>
+        </div>
+      </div>
+      <div class="k-row rv d4">
+        <div class="k-ic">📸</div>
+        <div>
+          <div class="k-l">Instagram</div>
+          <a href="https://www.instagram.com/TVOJE_JMENO_SEM" target="_blank" class="k-v">@zdever_repair</a>
+          <div class="k-n">Fotky oprav, aktuality</div>
         </div>
       </div>
       <div class="kont-cta rv d1">
@@ -1106,6 +1114,8 @@ footer::before {
       <h4>Kontakt</h4>
       <p>📞 [doplnit číslo]</p>
       <p>📍 Višňové a okolí</p>
+      <p>📘 facebook: [doplnit]</p>
+      <p>📸 Instagram: [doplnit]</p>
       <p style="margin-top:10px;opacity:.5;font-size:11px">IČO: [Doplň po získání živnosti]</p>
     </div>
   </div>
@@ -1203,7 +1213,7 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
 });
 </script>
    <div id="modal-ov" style="display:none;position:fixed;inset:0;background:rgba(28,42,74,.6);z-index:300;backdrop-filter:blur(3px);align-items:center;justify-content:center;">
-  <div style="background:#fff;border-radius:16px;padding:36px 32px;max-width:480px;width:90%;position:relative;box-shadow:0 20px 60px rgba(28,42,74,.25);">
+  <div style="background:#fff;border-radius:16px;padding:36px 32px;max-width:480px;width:90%;position:relative;box-shadow:0 20px 60px rgba(28,42,74,.25);max-height:90vh;overflow-y:auto;">
     <button onclick="closeModal()" style="position:absolute;top:14px;right:16px;border:none;background:none;font-size:22px;cursor:pointer;color:#6b7a99;">✕</button>
     <h3 style="font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:#1C2A4A;margin-bottom:8px;">Napsat zprávu</h3>
     <p style="font-size:13px;color:#6b7a99;margin-bottom:22px;">Vyplň formulář — ozvu se co nejdřív. Diagnostika je zdarma.</p>
@@ -1211,18 +1221,20 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
     <form id="contact-form" action="https://api.web3forms.com/submit" method="POST">
       <input type="hidden" name="access_key" value="f3fb2633-0472-4847-9333-eaeae6cd32c8">
       <input type="hidden" name="subject" value="ZdeVer_Repair_zprava">
+      <input type="hidden" name="replyto" value="">
+      <input type="hidden" name="autoresponse" value="Zdravím! Tvoji zprávu jsem dostal a ozvu se co nejdříve, nejpozději do 24 hodin. Diagnostika je zdarma — platíš jen pokud opravu schválíš. — Zdeněk, ZdeVer Repair">
       <input type="hidden" name="from_name" value="ZdeVer Repair Web">
       <input type="hidden" name="redirect" value="false">
       <input type="checkbox" name="botcheck" style="display:none">
       
       <div style="margin-bottom:14px;">
         <label style="font-size:12px;font-weight:600;color:#1C2A4A;letter-spacing:1px;text-transform:uppercase;display:block;margin-bottom:6px;">Jméno *</label>
-        <input type="text" name="name" required placeholder="Tvoje jméno" style="width:100%;padding:11px 14px;border:1.5px solid #d8dde8;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:14px;outline:none;transition:border-color .2s;" onfocus="this.style.borderColor='#4A7CC7'" onblur="this.style.borderColor='#d8dde8'">
+        <input type="email" name="email" required placeholder="Tvoje jméno" style="width:100%;padding:11px 14px;border:1.5px solid #d8dde8;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:14px;outline:none;transition:border-color .2s;" onfocus="this.style.borderColor='#4A7CC7'" onblur="this.style.borderColor='#d8dde8'">
       </div>
       
       <div style="margin-bottom:14px;">
         <label style="font-size:12px;font-weight:600;color:#1C2A4A;letter-spacing:1px;text-transform:uppercase;display:block;margin-bottom:6px;">Telefon nebo email (pro odpověď) *</label>
-        <input type="text" name="kontakt" required placeholder="+420 ... nebo email" style="width:100%;padding:11px 14px;border:1.5px solid #d8dde8;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:14px;outline:none;transition:border-color .2s;" onfocus="this.style.borderColor='#4A7CC7'" onblur="this.style.borderColor='#d8dde8'">
+        <input type="text" name="kontakt" required placeholder="tel. nebo Tvůj email (pro odpověď)" style="width:100%;padding:11px 14px;border:1.5px solid #d8dde8;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:14px;outline:none;transition:border-color .2s;" onfocus="this.style.borderColor='#4A7CC7'" onblur="this.style.borderColor='#d8dde8'">
       </div>
       
       <div style="margin-bottom:14px;">
