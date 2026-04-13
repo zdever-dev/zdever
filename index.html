@@ -1252,11 +1252,8 @@ function openModal() {
   const m = document.getElementById('modal-ov');
   m.style.display = 'flex';
   document.body.style.overflow = 'hidden';
-  
-  // Při otevření scrollni modal na vrch
-  setTimeout(() => {
-    m.scrollTop = 0;
-  }, 50);
+  if (window.visualViewport) handleViewport();
+  setTimeout(() => { m.scrollTop = 0; }, 50);
 }
 
 function closeModal() {
@@ -1271,10 +1268,9 @@ function closeModal() {
 function handleViewport() {
   const m = document.getElementById('modal-ov');
   if (!m || m.style.display === 'none') return;
-  // Výška viditelné oblasti = viewport minus klávesnice
-  const vh = window.visualViewport.height;
-  m.style.height = vh + 'px';
-  m.style.top = window.visualViewport.offsetTop + 'px';
+  m.style.top    = window.visualViewport.offsetTop + 'px';
+  m.style.height = window.visualViewport.height + 'px';
+  m.style.bottom = 'auto';
 }
 
 // Spusť listener při otevření modalu
@@ -1285,9 +1281,15 @@ document.getElementById('modal-ov').addEventListener('click', function(e) {
 // Přidej focus listener na inputy — scrollne aktivní pole do view
 document.querySelectorAll('#contact-form input, #contact-form textarea').forEach(el => {
   el.addEventListener('focus', function() {
+    const input = this;
     setTimeout(() => {
-      this.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    }, 350);
+      const overlay = document.getElementById('modal-ov');
+      const rect = input.getBoundingClientRect();
+      const vvh = window.visualViewport ? window.visualViewport.height : window.innerHeight;
+      if (rect.bottom > vvh - 20) {
+        overlay.scrollTop += rect.bottom - vvh + 40;
+      }
+    }, 400);
   });
 });
 
