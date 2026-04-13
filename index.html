@@ -1056,13 +1056,6 @@ footer::before {
             <div class="k-n">Po–Pá 8:00–18:00 · So 9:00–14:00</div>
           </div>
         </div>
-        <div class="k-row rv d1">
-          <div class="k-ic">✉️</div>
-          <div>
-            <div class="k-l">Email</div>
-            <a href="mailto:info@zdever.cz" class="k-v">zdever1@gmail.com</a>
-            <div class="k-n">Odpovím do 24 hodin</div>
-          </div>
         </div>
         <div class="k-row rv d2">
           <div class="k-ic">📍</div>
@@ -1084,7 +1077,7 @@ footer::before {
       <div class="kont-cta rv d1">
         <h3>Nefunguje ti technika?</h3>
         <p>Napiš mi co se děje a já ti řeknu co s tím jde dělat a přibližně kolik to bude stát. Žádné skryté poplatky, žádné záludnosti.</p>
-        <a href="mailto:info@zdever.cz" class="btn-p">Napsat zprávu</a>
+        <button class="btn-p" onclick="openModal()">📩 Napsat zprávu</button>
         <div class="free-note">✅ Diagnostika zdarma — bez závazku</div>
       </div>
     </div>
@@ -1112,7 +1105,6 @@ footer::before {
     <div class="ft-col">
       <h4>Kontakt</h4>
       <p>📞 +420 737 023 110</p>
-      <p>✉️ zdever1@gmail.com</p>
       <p>📍 Višňové a okolí</p>
       <p style="margin-top:10px;opacity:.5;font-size:11px">IČO: [Doplň po získání živnosti]</p>
     </div>
@@ -1208,6 +1200,93 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
     const y = target.getBoundingClientRect().top + window.scrollY - 76;
     window.scrollTo({ top: y, behavior: 'smooth' });
   });
+});
+</script>
+   <div id="modal-ov" style="display:none;position:fixed;inset:0;background:rgba(28,42,74,.6);z-index:300;backdrop-filter:blur(3px);align-items:center;justify-content:center;">
+  <div style="background:#fff;border-radius:16px;padding:36px 32px;max-width:480px;width:90%;position:relative;box-shadow:0 20px 60px rgba(28,42,74,.25);">
+    <button onclick="closeModal()" style="position:absolute;top:14px;right:16px;border:none;background:none;font-size:22px;cursor:pointer;color:#6b7a99;">✕</button>
+    <h3 style="font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:#1C2A4A;margin-bottom:8px;">Napsat zprávu</h3>
+    <p style="font-size:13px;color:#6b7a99;margin-bottom:22px;">Vyplň formulář — ozvu se co nejdřív. Diagnostika je zdarma.</p>
+    
+    <form id="contact-form" action="https://api.web3forms.com/submit" method="POST">
+      <input type="hidden" name="access_key" value="f3fb2633-0472-4847-9333-eaeae6cd32c8">
+      <input type="hidden" name="subject" value="ZdeVer_Repair_zprava">
+      <input type="hidden" name="from_name" value="ZdeVer Repair Web">
+      <input type="hidden" name="redirect" value="false">
+      <input type="checkbox" name="botcheck" style="display:none">
+      
+      <div style="margin-bottom:14px;">
+        <label style="font-size:12px;font-weight:600;color:#1C2A4A;letter-spacing:1px;text-transform:uppercase;display:block;margin-bottom:6px;">Jméno *</label>
+        <input type="text" name="name" required placeholder="Tvoje jméno" style="width:100%;padding:11px 14px;border:1.5px solid #d8dde8;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:14px;outline:none;transition:border-color .2s;" onfocus="this.style.borderColor='#4A7CC7'" onblur="this.style.borderColor='#d8dde8'">
+      </div>
+      
+      <div style="margin-bottom:14px;">
+        <label style="font-size:12px;font-weight:600;color:#1C2A4A;letter-spacing:1px;text-transform:uppercase;display:block;margin-bottom:6px;">Telefon nebo email (pro odpověď) *</label>
+        <input type="text" name="kontakt" required placeholder="+420 ... nebo email" style="width:100%;padding:11px 14px;border:1.5px solid #d8dde8;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:14px;outline:none;transition:border-color .2s;" onfocus="this.style.borderColor='#4A7CC7'" onblur="this.style.borderColor='#d8dde8'">
+      </div>
+      
+      <div style="margin-bottom:14px;">
+        <label style="font-size:12px;font-weight:600;color:#1C2A4A;letter-spacing:1px;text-transform:uppercase;display:block;margin-bottom:6px;">Popis problému *</label>
+        <textarea name="message" required rows="4" placeholder="Co ti nefunguje? Jaké zařízení? Kdy to začalo?" style="width:100%;padding:11px 14px;border:1.5px solid #d8dde8;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:14px;outline:none;resize:vertical;transition:border-color .2s;" onfocus="this.style.borderColor='#4A7CC7'" onblur="this.style.borderColor='#d8dde8'"></textarea>
+      </div>
+      
+      <div style="margin-bottom:22px;">
+        <label style="font-size:12px;font-weight:600;color:#1C2A4A;letter-spacing:1px;text-transform:uppercase;display:block;margin-bottom:6px;">Foto závady (nepovinné)</label>
+        <input type="file" name="attachment" accept="image/*" style="font-family:'DM Sans',sans-serif;font-size:13px;color:#6b7a99;width:100%;">
+        <div style="font-size:11px;color:#6b7a99;margin-top:4px;">Max. 5 MB · JPG, PNG</div>
+      </div>
+      
+      <button type="submit" id="submit-btn" style="width:100%;padding:14px;background:#4A7CC7;color:#fff;border:none;border-radius:10px;font-family:'Syne',sans-serif;font-size:15px;font-weight:700;cursor:pointer;transition:background .2s;">Odeslat zprávu</button>
+      <div id="form-success" style="display:none;margin-top:16px;background:#e8f4f0;color:#0a6a55;padding:12px 16px;border-radius:8px;font-size:14px;font-weight:600;">✅ Zpráva odeslána! Ozvu se co nejdřív.</div>
+      <div id="form-error" style="display:none;margin-top:16px;background:#fce8e8;color:#8a1a1a;padding:12px 16px;border-radius:8px;font-size:14px;">❌ Chyba při odesílání. Zkus to znovu nebo zavolej.</div>
+    </form>
+  </div>
+</div>
+
+<script>
+function openModal() {
+  const m = document.getElementById('modal-ov');
+  m.style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+}
+function closeModal() {
+  const m = document.getElementById('modal-ov');
+  m.style.display = 'none';
+  document.body.style.overflow = '';
+}
+document.getElementById('modal-ov').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
+
+document.getElementById('contact-form').addEventListener('submit', async function(e) {
+  e.preventDefault();
+  const btn = document.getElementById('submit-btn');
+  btn.textContent = 'Odesílám...';
+  btn.disabled = true;
+  
+  const formData = new FormData(this);
+  
+  try {
+    const res = await fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      body: formData
+    });
+    const data = await res.json();
+    
+    if (data.success) {
+      document.getElementById('form-success').style.display = 'block';
+      document.getElementById('form-error').style.display = 'none';
+      this.reset();
+      btn.textContent = '✅ Odesláno';
+    } else {
+      throw new Error();
+    }
+  } catch {
+    document.getElementById('form-error').style.display = 'block';
+    document.getElementById('form-success').style.display = 'none';
+    btn.textContent = 'Odeslat zprávu';
+    btn.disabled = false;
+  }
 });
 </script>
 </body>
