@@ -315,11 +315,11 @@ main { padding-top: var(--hh); }
 
 .hero-h1 {
   font-family: var(--font-d);
-  font-size: clamp(36px, 5.5vw, 70px);
-  font-weight: 700;
+  font-size: clamp(30px, 4.5vw, 56px);
+  font-weight: 600;
   color: #fff;
-  line-height: 1.04;
-  letter-spacing: -1px;
+  line-height: 1.1;
+  letter-spacing: 0px;
   margin-bottom: 22px;
   max-width: 740px;
 }
@@ -385,9 +385,9 @@ section { padding: 88px 36px; }
 .s-label { font-size: 11px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--blue); margin-bottom: 12px; }
 .s-title {
   font-family: var(--font-d);
-  font-size: clamp(26px, 3.5vw, 44px);
-  font-weight: 700; color: var(--navy);
-  letter-spacing: -.3px; line-height: 1.08;
+  font-size: clamp(22px, 2.8vw, 36px);
+  font-weight: 600; color: var(--navy);
+  letter-spacing: 0px; line-height: 1.15;
   margin-bottom: 14px;
 }
 .s-desc { font-size: 16px; color: var(--muted); max-width: 560px; line-height: 1.75; margin-bottom: 48px; font-weight: 300; }
@@ -1052,20 +1052,18 @@ footer::before {
           <div class="k-ic">📞</div>
           <div>
             <div class="k-l">Telefon</div>
-            <a href="tel:+420XXXXXXXXX" class="k-v">[dopnit číslo]</a>
+            <a href="tel:+420737023110" class="k-v">+420 737 023 110</a>
             <div class="k-n">Po–Pá 8:00–18:00 · So 9:00–14:00</div>
           </div>
         </div>
-        </div>
-        <div class="k-row rv d2">
+        <div class="k-row rv d1">
           <div class="k-ic">📍</div>
           <div>
             <div class="k-l">Lokalita</div>
             <div class="k-v">Višňové a okolí</div>
-            <!--<div class="k-n">Výjezd k zákazníkovi v okruhu 20 km</div>-->
           </div>
         </div>
-        <div class="k-row rv d3">
+        <div class="k-row rv d2">
           <div class="k-ic">📘</div>
           <div>
             <div class="k-l">Facebook</div>
@@ -1073,13 +1071,13 @@ footer::before {
             <div class="k-n">Facebook skupiny, zprávy, inzeráty</div>
           </div>
         </div>
-      </div>
-      <div class="k-row rv d4">
-        <div class="k-ic">📸</div>
-        <div>
-          <div class="k-l">Instagram</div>
-          <a href="https://www.instagram.com/TVOJE_JMENO_SEM" target="_blank" class="k-v">@zdever_repair</a>
-          <div class="k-n">Fotky oprav, aktuality</div>
+        <div class="k-row rv d3">
+          <div class="k-ic">📸</div>
+          <div>
+            <div class="k-l">Instagram</div>
+            <a href="https://www.instagram.com/TVOJE_JMENO_SEM" target="_blank" class="k-v">@zdever_repair</a>
+            <div class="k-n">Fotky oprav, aktuality</div>
+          </div>
         </div>
       </div>
       <div class="kont-cta rv d1">
@@ -1212,8 +1210,8 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
   });
 });
 </script>
-   <div id="modal-ov" style="display:none;position:fixed;inset:0;background:rgba(28,42,74,.6);z-index:300;backdrop-filter:blur(3px);align-items:center;justify-content:center;">
-  <div style="background:#fff;border-radius:16px;padding:36px 32px;max-width:480px;width:90%;position:relative;box-shadow:0 20px 60px rgba(28,42,74,.25);max-height:90vh;overflow-y:auto;">
+   <div id="modal-ov" style="display:none;position:fixed;inset:0;background:rgba(28,42,74,.6);z-index:300;backdrop-filter:blur(3px);align-items:flex-start;justify-content:center;padding:20px 0;overflow-y:auto;">
+  <div style="background:#fff;border-radius:16px;padding:28px 24px;max-width:480px;width:90%;position:relative;box-shadow:0 20px 60px rgba(28,42,74,.25);margin:auto;">
     <button onclick="closeModal()" style="position:absolute;top:14px;right:16px;border:none;background:none;font-size:22px;cursor:pointer;color:#6b7a99;">✕</button>
     <h3 style="font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:#1C2A4A;margin-bottom:8px;">Napsat zprávu</h3>
     <p style="font-size:13px;color:#6b7a99;margin-bottom:22px;">Vyplň formulář — ozvu se co nejdřív. Diagnostika je zdarma.</p>
