@@ -1210,8 +1210,8 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
   });
 });
 </script>
-   <div id="modal-ov" style="display:none;position:fixed;inset:0;background:rgba(28,42,74,.6);z-index:300;backdrop-filter:blur(3px);align-items:flex-start;justify-content:center;padding:20px 0;overflow:hidden;height:100%;">
-  <div style="background:#fff;border-radius:16px;padding:28px 24px;max-width:480px;width:90%;position:relative;box-shadow:0 20px 60px rgba(28,42,74,.25);margin:auto;overflow-y:auto;max-height:85vh;">
+   <div id="modal-ov" style="display:none;position:fixed;inset:0;background:rgba(28,42,74,.6);z-index:300;backdrop-filter:blur(3px);align-items:flex-start;justify-content:center;padding:20px 16px;overflow-y:auto;">
+  <div id="modal-card" style="background:#fff;border-radius:16px;padding:28px 24px;max-width:480px;width:90%;position:relative;box-shadow:0 20px 60px rgba(28,42,74,.25);margin:auto;overflow-y:auto;">
     <button onclick="closeModal()" style="position:absolute;top:14px;right:16px;border:none;background:none;font-size:22px;cursor:pointer;color:#6b7a99;">✕</button>
     <h3 style="font-family:'Syne',sans-serif;font-size:20px;font-weight600;letter-spacing:0px;color:#1C2A4A;margin-bottom:8px;">Napsat zprávu</h3>
     <p style="font-size:13px;color:#6b7a99;margin-bottom:22px;">Vyplň formulář — ozvu se co nejdřív. Diagnostika je zdarma.</p>
@@ -1285,12 +1285,11 @@ modalOv.addEventListener('touchmove', function(e) {
 
 function handleViewport() {
   const m = document.getElementById('modal-ov');
-  if (!m || m.style.display === 'none') return;
-  m.style.top    = window.visualViewport.offsetTop + 'px';
-  m.style.height = window.visualViewport.height + 'px';
-  m.style.bottom = 'auto';
+  const card = document.getElementById('modal-card');
+  if (!m || m.style.display === 'none' || !card) return;
+  const vh = window.visualViewport.height;
+  card.style.maxHeight = (vh - 40) + 'px';
 }
-
 // Spusť listener při otevření modalu
 document.getElementById('modal-ov').addEventListener('click', function(e) {
   if (e.target === this) closeModal();
