@@ -76,16 +76,75 @@
 
 /* ── Fotky ── */
 #fotky { background: var(--light); }
-.foto-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px,1fr)); gap: 14px; }
-.foto-card { background: var(--white); border: 1px solid var(--rule); border-radius: var(--r); overflow: hidden; position: relative; }
-.foto-card img { width: 100%; height: 200px; object-fit: cover; display: block; }
-.foto-card .foto-label { font-size: 12px; color: var(--muted); padding: 10px 14px; }
-.foto-placeholder { width: 100%; height: 200px; background: var(--bg); display: flex; align-items: center; justify-content: center; color: var(--muted); font-size: 13px; border-bottom: 1px solid var(--rule); }
-.dev-add-btn { display: none; position: absolute; top: 8px; right: 8px; background: var(--navy); color: #fff; border: none; border-radius: 6px; padding: 5px 10px; font-size: 12px; cursor: pointer; }
-body.dev-mode .dev-add-btn { display: block; }
-body.dev-mode .foto-placeholder { border: 2px dashed var(--blue); cursor: pointer; }
-.dev-banner { display: none; position: fixed; bottom: 0; left: 0; right: 0; background: var(--blue); color: #fff; text-align: center; font-size: 12px; padding: 5px; z-index: 9999; font-weight: 600; }
-body.dev-mode .dev-banner { display: block; }
+<div class="foto-grid" id="foto-grid">
+
+  <div class="foto-card" id="foto-0">
+    <img src="src/images/foto-0.jpg" class="foto-img" alt="Čištění notebooku"
+      onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+      onload="this.style.display='block';this.nextElementSibling.style.display='none'">
+    <div class="foto-placeholder" style="display:none">📷 Foto brzy přibyde</div>
+    <button class="dev-add-btn" onclick="devFotoInfo(0)">ℹ Jak přidat</button>
+    <button class="dev-del-btn" onclick="devHideFoto(0)">🗑 Skrýt</button>
+    <div class="foto-label">Čištění notebooku</div>
+    <div class="dev-instructions">Nahraj soubor jako: <strong>src/images/foto-0.jpg</strong></div>
+  </div>
+
+  <div class="foto-card" id="foto-1">
+    <img src="src/images/foto-1.jpg" class="foto-img" alt="Výměna displeje"
+      onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+      onload="this.style.display='block';this.nextElementSibling.style.display='none'">
+    <div class="foto-placeholder" style="display:none">📷 Foto brzy přibyde</div>
+    <button class="dev-add-btn" onclick="devFotoInfo(1)">ℹ Jak přidat</button>
+    <button class="dev-del-btn" onclick="devHideFoto(1)">🗑 Skrýt</button>
+    <div class="foto-label">Výměna displeje</div>
+    <div class="dev-instructions">Nahraj soubor jako: <strong>src/images/foto-1.jpg</strong></div>
+  </div>
+
+  <div class="foto-card" id="foto-2">
+    <img src="src/images/foto-2.jpg" class="foto-img" alt="Oprava telefonu"
+      onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+      onload="this.style.display='block';this.nextElementSibling.style.display='none'">
+    <div class="foto-placeholder" style="display:none">📷 Foto brzy přibyde</div>
+    <button class="dev-add-btn" onclick="devFotoInfo(2)">ℹ Jak přidat</button>
+    <button class="dev-del-btn" onclick="devHideFoto(2)">🗑 Skrýt</button>
+    <div class="foto-label">Oprava telefonu</div>
+    <div class="dev-instructions">Nahraj soubor jako: <strong>src/images/foto-2.jpg</strong></div>
+  </div>
+
+  <div class="foto-card" id="foto-3">
+    <img src="src/images/foto-3.jpg" class="foto-img" alt="Servis konzole"
+      onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+      onload="this.style.display='block';this.nextElementSibling.style.display='none'">
+    <div class="foto-placeholder" style="display:none">📷 Foto brzy přibyde</div>
+    <button class="dev-add-btn" onclick="devFotoInfo(3)">ℹ Jak přidat</button>
+    <button class="dev-del-btn" onclick="devHideFoto(3)">🗑 Skrýt</button>
+    <div class="foto-label">Servis konzole</div>
+    <div class="dev-instructions">Nahraj soubor jako: <strong>src/images/foto-3.jpg</strong></div>
+  </div>
+
+  <div class="foto-card" id="foto-4">
+    <img src="src/images/foto-4.jpg" class="foto-img" alt="SSD upgrade"
+      onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+      onload="this.style.display='block';this.nextElementSibling.style.display='none'">
+    <div class="foto-placeholder" style="display:none">📷 Foto brzy přibyde</div>
+    <button class="dev-add-btn" onclick="devFotoInfo(4)">ℹ Jak přidat</button>
+    <button class="dev-del-btn" onclick="devHideFoto(4)">🗑 Skrýt</button>
+    <div class="foto-label">SSD upgrade</div>
+    <div class="dev-instructions">Nahraj soubor jako: <strong>src/images/foto-4.jpg</strong></div>
+  </div>
+
+  <div class="foto-card" id="foto-5">
+    <img src="src/images/foto-5.jpg" class="foto-img" alt="Zákaznická zakázka"
+      onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+      onload="this.style.display='block';this.nextElementSibling.style.display='none'">
+    <div class="foto-placeholder" style="display:none">📷 Foto brzy přibyde</div>
+    <button class="dev-add-btn" onclick="devFotoInfo(5)">ℹ Jak přidat</button>
+    <button class="dev-del-btn" onclick="devHideFoto(5)">🗑 Skrýt</button>
+    <div class="foto-label">Zákaznická zakázka</div>
+    <div class="dev-instructions">Nahraj soubor jako: <strong>src/images/foto-5.jpg</strong></div>
+  </div>
+
+</div>
 
 /* ── FAQ ── */
 #faq { background: var(--white); }
@@ -115,6 +174,24 @@ body.dev-mode .dev-banner { display: block; }
 .about-photo-placeholder { width: 100%; aspect-ratio: 3/4; background: var(--navy2); border-radius: var(--r); display: flex; flex-direction: column; align-items: center; justify-content: center; color: rgba(255,255,255,.4); font-size: 13px; gap: 8px; }
 .about-photo-placeholder .ap-icon { font-size: 42px; opacity: .4; }
 .about-photo .dev-add-btn { display: none; }
+
+.dev-del-btn {
+  display: none;
+  position: absolute; bottom: 8px; right: 8px;
+  background: #8a1a1a; color: #fff;
+  border: none; border-radius: 6px;
+  padding: 5px 10px; font-size: 12px; cursor: pointer;
+}
+body.dev-mode .dev-del-btn { display: block; }
+.foto-card img.foto-hidden { display: none !important; }
+.dev-instructions {
+  display: none;
+  background: var(--navy); color: #fff;
+  font-size: 11px; padding: 10px 12px;
+  border-radius: 0 0 var(--r) var(--r);
+  line-height: 1.6;
+}
+body.dev-mode .dev-instructions { display: block; }
 /* ========================================================
    RESET & ROOT
 ======================================================== */
@@ -814,12 +891,16 @@ footer::before {
     <button class="sb-close" id="sb-close-btn">✕</button>
   </div>
   <nav class="sb-nav">
-    <a href="#hero"   class="sbl"><span class="ni">🏠</span> Úvod</a>
-    <a href="#sluzby" class="sbl"><span class="ni">🔧</span> Služby</a>
-    <a href="#cenik"  class="sbl"><span class="ni">💰</span> Ceník</a>
-    <a href="#proc"   class="sbl"><span class="ni">⭐</span> Proč já</a>
-    <a href="#omne"   class="sbl"><span class="ni">👤</span> O mně</a>
+    <a href="#hero"    class="sbl"><span class="ni">🏠</span> Úvod</a>
+    <a href="#recenze" class="sbl"><span class="ni">⭐</span> Recenze</a>
+    <a href="#sluzby"  class="sbl"><span class="ni">🔧</span> Služby</a>
+    <a href="#funguje" class="sbl"><span class="ni">📋</span> Jak to funguje</a>
+    <a href="#cenik"   class="sbl"><span class="ni">💰</span> Ceník</a>
+    <a href="#fotky"   class="sbl"><span class="ni">📷</span> Fotky</a>
+    <a href="#proc"    class="sbl"><span class="ni">✅</span> Proč já</a>
+    <a href="#omne"    class="sbl"><span class="ni">👤</span> O mně</a>
     <a href="#kontakt" class="sbl"><span class="ni">📍</span> Kontakt</a>
+    <a href="#faq"     class="sbl"><span class="ni">❓</span> FAQ</a>
     <a href="#kontakt" class="sbl ncta">📩 Napsat zprávu</a>
   </nav>
   <div class="sb-foot">
@@ -1440,12 +1521,19 @@ footer::before {
       </div>
       <div>
       <div class="about-photo rv d1" id="about-photo-wrap">
-       <div class="about-photo-placeholder" id="about-photo-placeholder">
-         <div class="ap-icon">👤</div>
-         <div>Fotka technika</div>
-            <button class="dev-add-btn" style="display:none;position:static;margin-top:8px" onclick="devAddAboutPhoto()">+ Přidat fotku</button>
-          </div>
-        </div>
+  <img src="src/images/technik.jpg" alt="Zdeněk Vérosta — ZdeVer Repair"
+    style="width:100%;border-radius:var(--r);display:block"
+    onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+    onload="this.style.display='block';this.nextElementSibling.style.display='none'">
+  <div class="about-photo-placeholder" style="display:none">
+    <div class="ap-icon">👤</div>
+    <div>Fotka technika</div>
+  </div>
+  <button class="dev-add-btn" onclick="devAboutInfo()" style="display:none">ℹ Jak přidat</button>
+  <div class="dev-instructions" style="border-radius:0 0 var(--r) var(--r)">
+    Nahraj soubor jako: <strong>src/images/technik.jpg</strong>
+  </div>
+</div>
         <div class="skill-card rv d2" style="margin-top:16px">
           <div class="skill-card-title">Co umím opravit</div>
           <div class="ski"><span class="ski-ic">💻</span><span class="ski-nm">PC & Notebooky</span><span class="ski-bg">HW + SW</span></div>
@@ -1649,10 +1737,14 @@ footer::before {
     <div class="ft-col">
       <h4>Navigace</h4>
       <a href="#sluzby">Služby</a>
+      <a href="#funguje">Jak to funguje</a>
       <a href="#cenik">Ceník</a>
+      <a href="#recenze">Recenze</a>
+      <a href="#fotky">Fotky</a>
       <a href="#proc">Proč ZdeVer</a>
       <a href="#omne">O mně</a>
       <a href="#kontakt">Kontakt</a>
+      <a href="#faq">FAQ</a>
     </div>
     <div class="ft-col">
       <h4>Kontakt</h4>
@@ -2008,61 +2100,51 @@ document.addEventListener('keydown', (e) => {
 });
 
 /* ── Fotky — dev přidávání ── */
-function devAddPhoto(index) {
+function devFotoInfo(index) {
   if (!devMode) return;
-  currentFotoIndex = index;
-  document.getElementById('foto-input').click();
+  const filename = 'src/images/foto-' + index + '.jpg';
+  alert('📁 Jak přidat fotku:\n\n1. Připrav fotku (JPG nebo PNG)\n2. Přejmenuj ji na: foto-' + index + '.jpg\n3. Nahraj ji na GitHub do složky: src/images/\n4. Po nahrání (commitnutí) bude viditelná všem.\n\nCelá cesta: ' + filename);
 }
 
-function handleFotoUpload(event) {
-  const file = event.target.files[0];
-  if (!file) return;
-  const reader = new FileReader();
-  reader.onload = (e) => {
-    const card = document.getElementById('foto-' + currentFotoIndex);
-    if (!card) return;
-    const label = card.querySelector('.foto-label').textContent;
-    card.innerHTML = `<img src="${e.target.result}" alt="${label}"><button class="dev-add-btn" onclick="devAddPhoto(${currentFotoIndex})">↺ Změnit</button><div class="foto-label">${label}</div>`;
-    const stored = JSON.parse(localStorage.getItem('zdever_photos') || '{}');
-    stored[currentFotoIndex] = { src: e.target.result, label };
-    localStorage.setItem('zdever_photos', JSON.stringify(stored));
-  };
-  reader.readAsDataURL(file);
-  event.target.value = '';
-}
-
-function devAddAboutPhoto() {
+function devHideFoto(index) {
   if (!devMode) return;
-  document.getElementById('about-foto-input').click();
+  if (!confirm('Skrýt tuto fotku? (Foto soubor zůstane na GitHubu — pro úplné smazání ho smažeš tam)')) return;
+  const card = document.getElementById('foto-' + index);
+  if (!card) return;
+  const img = card.querySelector('.foto-img');
+  const placeholder = card.querySelector('.foto-placeholder');
+  if (img) { img.style.display = 'none'; }
+  if (placeholder) { placeholder.style.display = 'flex'; }
+  const hidden = JSON.parse(localStorage.getItem('zdever_hidden_photos') || '[]');
+  if (!hidden.includes(index)) hidden.push(index);
+  localStorage.setItem('zdever_hidden_photos', JSON.stringify(hidden));
 }
 
-function handleAboutFotoUpload(event) {
-  const file = event.target.files[0];
-  if (!file) return;
-  const reader = new FileReader();
-  reader.onload = (e) => {
-    const wrap = document.getElementById('about-photo-wrap');
-    wrap.innerHTML = `<img src="${e.target.result}" alt="Zdeněk Vérosta — ZdeVer Repair" style="width:100%;border-radius:var(--r);display:block"><button class="dev-add-btn" onclick="devAddAboutPhoto()">↺ Změnit</button>`;
-    localStorage.setItem('zdever_about_photo', e.target.result);
-  };
-  reader.readAsDataURL(file);
-  event.target.value = '';
+function devRestoreFoto(index) {
+  const card = document.getElementById('foto-' + index);
+  if (!card) return;
+  const img = card.querySelector('.foto-img');
+  if (img) { img.style.display = 'block'; }
+  const hidden = JSON.parse(localStorage.getItem('zdever_hidden_photos') || '[]');
+  localStorage.setItem('zdever_hidden_photos', JSON.stringify(hidden.filter(i => i !== index)));
 }
 
-/* ── Načíst uložené fotky při startu ── */
-(function loadStoredPhotos() {
-  const photos = JSON.parse(localStorage.getItem('zdever_photos') || '{}');
-  Object.keys(photos).forEach(idx => {
-    const card = document.getElementById('foto-' + idx);
+function devAboutInfo() {
+  if (!devMode) return;
+  alert('📁 Jak přidat svoji fotku:\n\n1. Připrav fotku (JPG nebo PNG, ideálně na výšku)\n2. Přejmenuj ji na: technik.jpg\n3. Nahraj ji na GitHub do složky: src/images/\n4. Po nahrání (commitnutí) bude viditelná všem.\n\nCelá cesta: src/images/technik.jpg');
+}
+
+/* Načíst skryté fotky při startu */
+(function loadHiddenPhotos() {
+  const hidden = JSON.parse(localStorage.getItem('zdever_hidden_photos') || '[]');
+  hidden.forEach(index => {
+    const card = document.getElementById('foto-' + index);
     if (!card) return;
-    const { src, label } = photos[idx];
-    card.innerHTML = `<img src="${src}" alt="${label}"><button class="dev-add-btn" onclick="devAddPhoto(${idx})">↺ Změnit</button><div class="foto-label">${label}</div>`;
+    const img = card.querySelector('.foto-img');
+    const placeholder = card.querySelector('.foto-placeholder');
+    if (img) img.style.display = 'none';
+    if (placeholder) placeholder.style.display = 'flex';
   });
-  const aboutSrc = localStorage.getItem('zdever_about_photo');
-  if (aboutSrc) {
-    const wrap = document.getElementById('about-photo-wrap');
-    if (wrap) wrap.innerHTML = `<img src="${aboutSrc}" alt="Zdeněk Vérosta" style="width:100%;border-radius:var(--r);display:block"><button class="dev-add-btn" onclick="devAddAboutPhoto()">↺ Změnit</button>`;
-  }
 })();
 </script>
 <!-- STICKY CTA -->
