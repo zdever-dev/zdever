@@ -2074,25 +2074,6 @@ async function loadReviews() {
   renderReviews();
 }
 
-  if (REVIEWS_CONFIG.backend === 'supabase' && REVIEWS_CONFIG.supabase.url !== 'VLOZ_SUPABASE_URL') {
-    try {
-      const res = await fetch(
-        `${REVIEWS_CONFIG.supabase.url}/rest/v1/reviews?approved=eq.true&order=date.desc&limit=10`,
-        { headers: { 'apikey': REVIEWS_CONFIG.supabase.key, 'Authorization': `Bearer ${REVIEWS_CONFIG.supabase.key}` } }
-      );
-      if (!res.ok) throw new Error();
-      const data = await res.json();
-      reviews = data.map(r => ({ name: r.name, rating: r.rating, text: r.text, date: r.date?.slice(0,10) }));
-    } catch {
-      console.warn('[Reviews] Supabase selhal, zobrazuji zálohu');
-      reviews = REVIEWS_CONFIG.fallback;
-    }
-  } else {
-    reviews = REVIEWS_CONFIG.fallback;
-  }
-  renderReviews();
-}
-
 function renderReviews() {
   const container = document.getElementById('rev-container');
   const placeholder = document.getElementById('rev-placeholder');
@@ -2116,28 +2097,6 @@ function renderReviews() {
       <div class="rev-author">— ${displayName}${loc} <span style="opacity:.45;font-size:11px">${d}</span></div>`;
     container.appendChild(card);
   });
-}
-  const container = document.getElementById('rev-container');
-  const placeholder = document.getElementById('rev-placeholder');
-  if (!reviews || reviews.length === 0) {
-    if (placeholder) placeholder.style.display = '';
-    return;
-  }
-  if (placeholder) placeholder.style.display = 'none';
-  container.querySelectorAll('.rev-card:not(#rev-placeholder)').forEach(c => c.remove());
-  reviews.forEach(r => {
-    const card = document.createElement('div');
-    card.className = 'rev-card';
-    const d = r.date ? new Date(r.date).toLocaleDateString('cs-CZ') : '';
-    card.innerHTML = `<div class="rev-stars">${'★'.repeat(r.rating)}${'☆'.repeat(5-r.rating)}</div>
-      <div class="rev-text">"${r.text}"</div>
-      <div class="rev-author">— ${r.name} <span style="opacity:.45;font-size:11px">${d}</span></div>`;
-    container.appendChild(card);
-  });
-  if (reviews.length >= 5) {
-    const cta = document.getElementById('rev-google-cta');
-    if (cta) cta.style.display = 'flex';
-  }
 }
 
 async function submitReview() {
@@ -2206,46 +2165,6 @@ async function submitReview() {
     renderReviews();
   }
   setTimeout(() => { msg.style.display = 'none'; }, 6000);
-}
-  const name   = document.getElementById('rev-name').value.trim();
-  const text   = document.getElementById('rev-text').value.trim();
-  const rating = selectedRating;
-  if (!name || !text || rating === 0) { alert('Vyplň jméno, text a hvězdičky.'); return; }
-
-  let saved = false;
-  if (REVIEWS_CONFIG.backend === 'supabase' && REVIEWS_CONFIG.supabase.url !== 'VLOZ_SUPABASE_URL') {
-    const res = await fetch(`${REVIEWS_CONFIG.supabase.url}/rest/v1/reviews`, {
-      method: 'POST',
-      headers: {
-        'apikey': REVIEWS_CONFIG.supabase.key,
-        'Authorization': `Bearer ${REVIEWS_CONFIG.supabase.key}`,
-        'Content-Type': 'application/json',
-        'Prefer': 'return=minimal'
-      },
-      body: JSON.stringify({ name, text, rating })
-    });
-    saved = res.ok;
-  }
-
-  // Reset formuláře
-  document.getElementById('rev-name').value = '';
-  document.getElementById('rev-text').value = '';
-  selectedRating = 0;
-  document.getElementById('rev-rating').value = 0;
-  document.querySelectorAll('#star-select span').forEach(s => s.classList.remove('lit'));
-
-  const msg = document.getElementById('rev-success');
-  if (saved) {
-    msg.innerHTML = '✅ Recenze odeslána! Zobrazí se po schválení.';
-    msg.style.background = '#e8f4f0'; msg.style.color = '#0a6a55';
-  } else {
-    msg.innerHTML = '✅ Díky! Supabase není nastaven — prosíme zanech recenzi na <a href="' + document.getElementById('google-review-link').href + '" target="_blank" style="color:#0a6a55">Google</a>.';
-    msg.style.background = '#fffbeb'; msg.style.color = '#92400e';
-    reviews.unshift({ name, text, rating, date: new Date().toISOString().slice(0,10) });
-    renderReviews();
-  }
-  msg.style.display = 'block';
-  setTimeout(() => { msg.style.display = 'none'; }, 5000);
 }
 
 /* Star select */
