@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://zdever.cz/sitemap.xml
