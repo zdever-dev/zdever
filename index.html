@@ -4,10 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ZdeVer Repair — Opravy elektroniky Višňové</title>
-<meta name="description" content="Profesionální opravy elektroniky v Višňové. PC, notebooky, telefony, tiskárny. Diagnostika zdarma, 30 dní záruka. Zdeněk Vérosta, OSVČ.">
-<meta name="keywords" content="opravy elektroniky Višňové, oprava notebooku, oprava telefonu, oprava PC, ZdeVer">
+<meta name="description" content="Profesionální opravy elektroniky v Višňové. PC, notebooky, telefony, tiskárny. Diagnostika zdarma, 3 měsíce záruka. Zdeněk Vérosta, OSVČ.">
+<meta name="keywords" content="opravy elektroniky Višňové, oprava notebooku, oprava telefonu, oprava PC, ZdeVer, servis elektroniky jihomoravský kraj, Znojmo">
 <meta property="og:title" content="ZdeVer Repair — Opravy elektroniky Višňové">
-<meta property="og:description" content="Diagnostika zdarma. Cena předem. 30 dní záruka.">
+<meta property="og:description" content="Diagnostika zdarma. Cena předem. 3 měsíce záruka.">
+<meta property="og:image" content="src/images/og.png">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://zdever.cz">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -847,7 +850,48 @@ footer::before {
   .p-tab      { padding: 7px 11px; font-size: 12px; }
   .ft-in      { grid-template-columns: 1fr; gap: 26px; }
 }
+/* DEV banner — skryt v produkci */
+.dev-banner { display: none; position: fixed; top: 0; left: 0; right: 0; z-index: 999; background: #c92a2a; color: #fff; text-align: center; font-size: 12px; font-weight: 600; padding: 5px; }
+
+/* Modal — scroll nepropaguje na pozadí */
+#modal-card { overscroll-behavior: contain; }
+
+/* Hero — response time */
+.hero-response {
+  display: inline-flex; align-items: center; gap: 8px;
+  margin-top: 18px;
+  font-size: 13px; color: rgba(255,255,255,.5);
+}
+.hero-response::before {
+  content: ''; width: 7px; height: 7px; border-radius: 50%;
+  background: #4ade80; flex-shrink: 0;
+  box-shadow: 0 0 0 3px rgba(74,222,128,.2);
+}
 </style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "name": "ZdeVer Repair",
+  "description": "Profesionální opravy elektroniky. PC, notebooky, telefony, tiskárny. Diagnostika zdarma, 3 měsíce záruka.",
+  "url": "https://zdever.cz",
+  "telephone": "+420737023110",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Višňové",
+    "addressLocality": "Višňové",
+    "addressRegion": "Jihomoravský kraj",
+    "postalCode": "671 38",
+    "addressCountry": "CZ"
+  },
+  "openingHoursSpecification": [
+    { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"], "opens": "08:00", "closes": "18:00" },
+    { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Saturday"], "opens": "09:00", "closes": "14:00" }
+  ],
+  "priceRange": "Kč",
+  "sameAs": ["https://www.instagram.com/zdever_repair/"]
+}
+</script>
 </head>
 <body>
 
@@ -926,6 +970,7 @@ footer::before {
       <a href="#cenik"   class="btn-p">Zobrazit ceník</a>
       <a href="#kontakt" class="btn-s">Domluvit opravu</a>
     </div>
+      <p class="hero-response">Obvykle odpovím do 2 hodin</p>
     <div class="hero-trust">
       <div class="trust-it">
         <div class="trust-ic">🔍</div>
@@ -987,9 +1032,13 @@ footer::before {
         <div id="rev-success" style="display:none;margin-top:12px;background:#e8f4f0;color:#0a6a55;padding:10px 14px;border-radius:8px;font-size:13px;font-weight:600">✅ Recenze přidána!</div>
       </div>
       <div>
-        <div class="google-cta">
+        <div class="google-cta" id="rev-google-cta">
           <span>Máš chvíli navíc? Recenze na Google nám hodně pomůže!</span>
-          <a href="https://g.page/r/TVUJ_GOOGLE_REVIEW_LINK/review" target="_blank">Zanechat recenzi na Google →</a>
+          <a href="https://g.page/r/TVUJ_GOOGLE_REVIEW_LINK/review" target="_blank" id="google-review-link">Zanechat recenzi na Google →</a>
+        </div>
+        <!-- Placeholder pro variantu C (Google Reviews embed — aktivuje se přes DEV přepínač) -->
+        <div id="google-reviews-embed" style="display:none;background:var(--light);border-radius:9px;padding:14px;font-size:13px;color:var(--muted);">
+          🔌 Google Reviews embed — aktivuj v DEV panelu po nastavení Places API klíče.
         </div>
         <div style="margin-top:14px;font-size:12px;color:var(--muted);line-height:1.6">
           Recenze na Google jsou vidět ve vyhledávání a pomáhají dalším zákazníkům nás najít. Stačí 2 minuty a pár vět.
@@ -1587,37 +1636,35 @@ footer::before {
     <div class="s-label">Naše práce</div>
     <h2 class="s-title rv">Fotky oprav</h2>
     <p class="s-desc rv d1">Každá oprava začíná diagnostikou a končí otestovaným zařízením. Tady je ukázka naší práce.</p>
-    <div class="foto-grid" id="foto-grid">
-      <div class="foto-card" id="foto-0">
-        <div class="foto-placeholder" onclick="devAddPhoto(0)">📷 Foto brzy přibyde</div>
-        <button class="dev-add-btn" onclick="devAddPhoto(0)">+ Přidat foto</button>
-        <div class="foto-label">Čištění notebooku</div>
-      </div>
-      <div class="foto-card" id="foto-1">
-        <div class="foto-placeholder" onclick="devAddPhoto(1)">📷 Foto brzy přibyde</div>
-        <button class="dev-add-btn" onclick="devAddPhoto(1)">+ Přidat foto</button>
-        <div class="foto-label">Výměna displeje</div>
-      </div>
-      <div class="foto-card" id="foto-2">
-        <div class="foto-placeholder" onclick="devAddPhoto(2)">📷 Foto brzy přibyde</div>
-        <button class="dev-add-btn" onclick="devAddPhoto(2)">+ Přidat foto</button>
-        <div class="foto-label">Oprava telefonu</div>
-      </div>
-      <div class="foto-card" id="foto-3">
-        <div class="foto-placeholder" onclick="devAddPhoto(3)">📷 Foto brzy přibyde</div>
-        <button class="dev-add-btn" onclick="devAddPhoto(3)">+ Přidat foto</button>
-        <div class="foto-label">Servis konzole</div>
-      </div>
-      <div class="foto-card" id="foto-4">
-        <div class="foto-placeholder" onclick="devAddPhoto(4)">📷 Foto brzy přibyde</div>
-        <button class="dev-add-btn" onclick="devAddPhoto(4)">+ Přidat foto</button>
-        <div class="foto-label">SSD upgrade</div>
-      </div>
-      <div class="foto-card" id="foto-5">
-        <div class="foto-placeholder" onclick="devAddPhoto(5)">📷 Foto brzy přibyde</div>
-        <button class="dev-add-btn" onclick="devAddPhoto(5)">+ Přidat foto</button>
-        <div class="foto-label">Zákaznická zakázka</div>
-      </div>
+    <div id="gallery-loading" style="text-align:center;padding:40px;color:var(--muted);font-size:14px;">Načítám galerii…</div>
+    <div class="foto-grid" id="foto-grid" style="display:none"></div>
+    <div id="gallery-empty" style="display:none;text-align:center;padding:48px 20px;">
+      <div style="font-size:42px;margin-bottom:12px;">📷</div>
+      <div style="font-size:15px;font-weight:600;color:var(--navy);margin-bottom:6px;">Fotky brzy přibudou</div>
+      <div style="font-size:13px;color:var(--muted);">Prvním zákazníkům dělám opravy teprve chvíli — fotky přidám co nejdříve.</div>
+    </div>
+    <!-- DEV: přidat set -->
+    <div id="dev-gallery-panel" style="display:none;margin-top:20px;background:var(--navy);color:#fff;border-radius:var(--r);padding:20px 24px;">
+      <div style="font-family:var(--font-d);font-size:12px;letter-spacing:2px;color:var(--blue-l);text-transform:uppercase;margin-bottom:12px;">DEV — Přidat set fotek</div>
+      <ol style="padding-left:18px;font-size:13px;color:rgba(255,255,255,.75);line-height:2;">
+        <li>Vytvoř složku: <code style="background:rgba(255,255,255,.1);padding:1px 6px;border-radius:4px;">src/images/sets/NAZEV-SETU/</code></li>
+        <li>Nahrej do ní: <code style="background:rgba(255,255,255,.1);padding:1px 6px;border-radius:4px;">cover.jpg</code>, <code style="background:rgba(255,255,255,.1);padding:1px 6px;border-radius:4px;">01.jpg</code>, <code style="background:rgba(255,255,255,.1);padding:1px 6px;border-radius:4px;">02.jpg</code>…</li>
+        <li>Uprav <code style="background:rgba(255,255,255,.1);padding:1px 6px;border-radius:4px;">src/data/gallery.json</code> — přidej objekt níže:</li>
+      </ol>
+      <pre id="gallery-json-template" style="background:rgba(255,255,255,.07);border-radius:8px;padding:14px;font-size:12px;margin-top:10px;overflow-x:auto;color:#a5d6a7;">{
+      "slug": "NAZEV-SETU",
+      "title": "Čištění notebooku",
+      "date": "2025-11-01",
+      "cover": "src/images/sets/NAZEV-SETU/cover.jpg",
+      "photos": [
+        "src/images/sets/NAZEV-SETU/01.jpg",
+        "src/images/sets/NAZEV-SETU/02.jpg"
+      ]
+    }</pre>
+      <button onclick="navigator.clipboard.writeText(document.getElementById('gallery-json-template').textContent)" 
+        style="margin-top:10px;padding:6px 14px;background:rgba(255,255,255,.1);color:#fff;border:none;border-radius:6px;cursor:pointer;font-size:12px;">
+        📋 Zkopírovat JSON šablonu
+      </button>
     </div>
   </div>
 </section>
@@ -1649,8 +1696,11 @@ footer::before {
           <div class="k-ic">📘</div>
           <div>
             <div class="k-l">Facebook</div>
-            <a href="https://www.facebook.com/TVOJE_STRANKA_SEM" target="_blank" class="k-v">ZdeVer Repair</a>
+            <a href="https://www.facebook.com/TVOJE_STRANKA_SEM" target="_blank" class="k-v" id="fb-link">ZdeVer Repair</a>
             <div class="k-n">Facebook skupiny, zprávy, inzeráty</div>
+            <div class="dev-instructions" style="font-size:11px;padding:6px 10px;margin-top:4px;border-radius:6px;">
+            Nahraď URL: hledej <code>TVOJE_STRANKA_SEM</code> v HTML
+            </div>
           </div>
         </div>
         <div class="k-row rv d3">
@@ -2019,123 +2069,317 @@ document.addEventListener('click', (e) => {
   }
 });
 
-/* ── Recenze — localStorage ── */
-let reviews = JSON.parse(localStorage.getItem('zdever_reviews') || '[]');
+/* ── Reviews systém — Supabase (B) + přepínač v DEV ── */
+const REVIEWS_CONFIG = {
+  // 'local' = hardcoded záloha | 'supabase' = živá DB
+  backend: 'local',
+
+  // Supabase setup (zdarma na supabase.com):
+  // SQL: CREATE TABLE reviews (id serial primary key, name text not null, rating int2 not null, text text not null, date timestamptz default now(), approved bool default false);
+  // RLS (Row Level Security): anon může SELECT kde approved = true, INSERT vše
+  supabase: {
+    url: 'VLOZ_SUPABASE_URL',       // https://xxxxx.supabase.co
+    key: 'VLOZ_SUPABASE_ANON_KEY',  // eyJ...
+  },
+
+  // Google Reviews placeholder (varianta C — vyžaduje Places API klíč)
+  google: {
+    placeId: 'VLOZ_GOOGLE_PLACE_ID',
+    apiKey:  'VLOZ_GOOGLE_API_KEY',
+  },
+
+  // Záložní recenze (vždy zobrazeny pokud Supabase selže nebo backend='local')
+  fallback: [
+    { name: 'Jan N.',   rating: 5, text: 'Notebook byl po čištění jako nový. Rychlá oprava, férová cena.', date: '2025-10-15' },
+    { name: 'Marie K.', rating: 5, text: 'Pomohl mi přenést data na nový telefon. Doporučuji!',           date: '2025-11-02' },
+  ]
+};
+
+let reviews = [];
 let selectedRating = 0;
 
+async function loadReviews() {
+  if (REVIEWS_CONFIG.backend === 'supabase' && REVIEWS_CONFIG.supabase.url !== 'VLOZ_SUPABASE_URL') {
+    try {
+      const res = await fetch(
+        `${REVIEWS_CONFIG.supabase.url}/rest/v1/reviews?approved=eq.true&order=date.desc&limit=10`,
+        { headers: { 'apikey': REVIEWS_CONFIG.supabase.key, 'Authorization': `Bearer ${REVIEWS_CONFIG.supabase.key}` } }
+      );
+      if (!res.ok) throw new Error();
+      const data = await res.json();
+      reviews = data.map(r => ({ name: r.name, rating: r.rating, text: r.text, date: r.date?.slice(0,10) }));
+    } catch {
+      console.warn('[Reviews] Supabase selhal, zobrazuji zálohu');
+      reviews = REVIEWS_CONFIG.fallback;
+    }
+  } else {
+    reviews = REVIEWS_CONFIG.fallback;
+  }
+  renderReviews();
+}
+
+function renderReviews() {
+  const container = document.getElementById('rev-container');
+  const placeholder = document.getElementById('rev-placeholder');
+  if (!reviews || reviews.length === 0) {
+    if (placeholder) placeholder.style.display = '';
+    return;
+  }
+  if (placeholder) placeholder.style.display = 'none';
+  container.querySelectorAll('.rev-card:not(#rev-placeholder)').forEach(c => c.remove());
+  reviews.forEach(r => {
+    const card = document.createElement('div');
+    card.className = 'rev-card';
+    const d = r.date ? new Date(r.date).toLocaleDateString('cs-CZ') : '';
+    card.innerHTML = `<div class="rev-stars">${'★'.repeat(r.rating)}${'☆'.repeat(5-r.rating)}</div>
+      <div class="rev-text">"${r.text}"</div>
+      <div class="rev-author">— ${r.name} <span style="opacity:.45;font-size:11px">${d}</span></div>`;
+    container.appendChild(card);
+  });
+  if (reviews.length >= 5) {
+    const cta = document.getElementById('rev-google-cta');
+    if (cta) cta.style.display = 'flex';
+  }
+}
+
+async function submitReview() {
+  const name   = document.getElementById('rev-name').value.trim();
+  const text   = document.getElementById('rev-text').value.trim();
+  const rating = selectedRating;
+  if (!name || !text || rating === 0) { alert('Vyplň jméno, text a hvězdičky.'); return; }
+
+  let saved = false;
+  if (REVIEWS_CONFIG.backend === 'supabase' && REVIEWS_CONFIG.supabase.url !== 'VLOZ_SUPABASE_URL') {
+    const res = await fetch(`${REVIEWS_CONFIG.supabase.url}/rest/v1/reviews`, {
+      method: 'POST',
+      headers: {
+        'apikey': REVIEWS_CONFIG.supabase.key,
+        'Authorization': `Bearer ${REVIEWS_CONFIG.supabase.key}`,
+        'Content-Type': 'application/json',
+        'Prefer': 'return=minimal'
+      },
+      body: JSON.stringify({ name, text, rating })
+    });
+    saved = res.ok;
+  }
+
+  // Reset formuláře
+  document.getElementById('rev-name').value = '';
+  document.getElementById('rev-text').value = '';
+  selectedRating = 0;
+  document.getElementById('rev-rating').value = 0;
+  document.querySelectorAll('#star-select span').forEach(s => s.classList.remove('lit'));
+
+  const msg = document.getElementById('rev-success');
+  if (saved) {
+    msg.innerHTML = '✅ Recenze odeslána! Zobrazí se po schválení.';
+    msg.style.background = '#e8f4f0'; msg.style.color = '#0a6a55';
+  } else {
+    msg.innerHTML = '✅ Díky! Supabase není nastaven — prosíme zanech recenzi na <a href="' + document.getElementById('google-review-link').href + '" target="_blank" style="color:#0a6a55">Google</a>.';
+    msg.style.background = '#fffbeb'; msg.style.color = '#92400e';
+    reviews.unshift({ name, text, rating, date: new Date().toISOString().slice(0,10) });
+    renderReviews();
+  }
+  msg.style.display = 'block';
+  setTimeout(() => { msg.style.display = 'none'; }, 5000);
+}
+
+/* Star select */
 document.querySelectorAll('#star-select span').forEach(star => {
   star.addEventListener('mouseover', () => {
     const val = +star.dataset.val;
-    document.querySelectorAll('#star-select span').forEach((s, i) => s.classList.toggle('lit', i < val));
+    document.querySelectorAll('#star-select span').forEach((s,i) => s.classList.toggle('lit', i < val));
   });
   star.addEventListener('click', () => {
     selectedRating = +star.dataset.val;
     document.getElementById('rev-rating').value = selectedRating;
   });
   star.addEventListener('mouseleave', () => {
-    document.querySelectorAll('#star-select span').forEach((s, i) => s.classList.toggle('lit', i < selectedRating));
+    document.querySelectorAll('#star-select span').forEach((s,i) => s.classList.toggle('lit', i < selectedRating));
   });
 });
 
-function renderReviews() {
-  const container = document.getElementById('rev-container');
-  const placeholder = document.getElementById('rev-placeholder');
-  if (reviews.length === 0) {
-    placeholder.style.display = '';
-    return;
-  }
-  placeholder.style.display = 'none';
-  container.querySelectorAll('.rev-card:not(#rev-placeholder)').forEach(c => c.remove());
-  reviews.forEach(r => {
-    const card = document.createElement('div');
-    card.className = 'rev-card';
-    card.innerHTML = `<div class="rev-stars">${'★'.repeat(r.rating)}${'☆'.repeat(5 - r.rating)}</div><div class="rev-text">"${r.text}"</div><div class="rev-author">— ${r.name}</div>`;
-    container.appendChild(card);
+/* DEV panel — přepínač backendu */
+function renderDevReviewPanel() {
+  if (document.getElementById('dev-reviews-panel')) return;
+  const panel = document.createElement('div');
+  panel.id = 'dev-reviews-panel';
+  panel.style.cssText = 'position:fixed;top:50px;right:16px;z-index:9000;background:#1C2A4A;color:#fff;border-radius:10px;padding:14px 18px;font-size:13px;min-width:210px;box-shadow:0 4px 20px rgba(0,0,0,.4);';
+  panel.innerHTML = `
+    <div style="font-weight:700;margin-bottom:10px;color:#7aaae8;letter-spacing:1px;text-transform:uppercase;font-size:10px;">Reviews Backend</div>
+    ${['local','supabase','google'].map(v => `
+      <label style="display:flex;align-items:center;gap:8px;margin-bottom:7px;cursor:pointer;${v==='google'?'opacity:.45':''}" title="${v==='google'?'Vyžaduje Google Places API klíč':''}">
+        <input type="radio" name="dev-rev-backend" value="${v}" ${REVIEWS_CONFIG.backend===v?'checked':''} ${v==='google'?'disabled':''}>
+        ${v === 'local' ? 'Local (záloha)' : v === 'supabase' ? 'Supabase' : 'Google Reviews (brzy)'}
+      </label>`).join('')}
+    <div style="font-size:11px;color:rgba(255,255,255,.4);margin-top:6px;margin-bottom:10px;">
+      Supabase URL: ${REVIEWS_CONFIG.supabase.url === 'VLOZ_SUPABASE_URL' ? '❌ nenastaveno' : '✅ OK'}
+    </div>
+    <button onclick="document.getElementById('dev-reviews-panel').remove()" style="padding:4px 12px;background:rgba(255,255,255,.1);border:none;color:#fff;border-radius:6px;cursor:pointer;font-size:11px;">Zavřít</button>
+  `;
+  document.body.appendChild(panel);
+  panel.querySelectorAll('input[name=dev-rev-backend]').forEach(r => {
+    r.addEventListener('change', () => { REVIEWS_CONFIG.backend = r.value; loadReviews(); });
   });
 }
 
-function submitReview() {
-  const name = document.getElementById('rev-name').value.trim();
-  const text = document.getElementById('rev-text').value.trim();
-  const rating = selectedRating;
-  if (!name || !text || rating === 0) {
-    alert('Vyplň jméno, text recenze a vyber hodnocení hvězdičkami.');
-    return;
-  }
-  reviews.unshift({ name, text, rating, date: new Date().toLocaleDateString('cs-CZ') });
-  localStorage.setItem('zdever_reviews', JSON.stringify(reviews));
-  renderReviews();
-  document.getElementById('rev-name').value = '';
-  document.getElementById('rev-text').value = '';
-  selectedRating = 0;
-  document.getElementById('rev-rating').value = 0;
-  document.querySelectorAll('#star-select span').forEach(s => s.classList.remove('lit'));
-  document.getElementById('rev-success').style.display = 'block';
-  setTimeout(() => { document.getElementById('rev-success').style.display = 'none'; }, 3000);
-}
+loadReviews();
 
-renderReviews();
+/* ── Galerie — gallery.json ── */
+async function loadGallery() {
+  const loading = document.getElementById('gallery-loading');
+  const grid    = document.getElementById('foto-grid');
+  const empty   = document.getElementById('gallery-empty');
 
-/* ── Developer režim ── */
-const DEV_PASSWORD = 'zdever2025';
-let devMode = false;
-let currentFotoIndex = null;
+  try {
+    const res = await fetch('src/data/gallery.json');
+    if (!res.ok) throw new Error();
+    const sets = await res.json();
 
-document.addEventListener('keydown', (e) => {
-  if (e.key === 'F1') {
-    e.preventDefault();
-    if (devMode) {
-      devMode = false;
-      document.body.classList.remove('dev-mode');
+    if (!sets || sets.length === 0) {
+      loading.style.display = 'none';
+      empty.style.display = 'block';
       return;
     }
-    const pwd = prompt('🔐 Developer heslo:');
-    if (pwd === DEV_PASSWORD) {
-      devMode = true;
-      document.body.classList.add('dev-mode');
-    } else if (pwd !== null) {
-      alert('❌ Špatné heslo');
-    }
+
+    grid.innerHTML = '';
+    sets.forEach(set => {
+      const card = document.createElement('div');
+      card.className = 'foto-card rv';
+      card.innerHTML = `
+        <img src="${set.cover}" class="foto-img" alt="${set.title}"
+          onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+          onload="this.style.display='block';this.nextElementSibling.style.display='none'"
+          style="cursor:pointer" onclick="openGallerySet(${JSON.stringify(set).replace(/"/g,"&quot;")})">
+        <div class="foto-placeholder" style="display:none">📷 Foto se načítá…</div>
+        <div class="foto-label">${set.title}</div>
+      `;
+      grid.appendChild(card);
+    });
+
+    loading.style.display = 'none';
+    grid.style.display = '';
+
+  } catch {
+    loading.style.display = 'none';
+    empty.style.display = 'block';
+  }
+}
+
+/* Lightbox pro sety */
+function openGallerySet(set) {
+  let lb = document.getElementById('gallery-lightbox');
+  if (!lb) {
+    lb = document.createElement('div');
+    lb.id = 'gallery-lightbox';
+    lb.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:500;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;';
+    lb.innerHTML = `
+      <button onclick="document.getElementById('gallery-lightbox').remove()"
+        style="position:absolute;top:16px;right:20px;background:none;border:none;color:#fff;font-size:28px;cursor:pointer;z-index:2;">✕</button>
+      <div id="lb-title" style="color:#fff;font-family:var(--font-d);font-size:18px;font-weight:700;margin-bottom:16px;"></div>
+      <div id="lb-photos" style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center;overflow-y:auto;max-height:80vh;"></div>
+    `;
+    document.body.appendChild(lb);
+  }
+  document.getElementById('lb-title').textContent = set.title;
+  const photosDiv = document.getElementById('lb-photos');
+  photosDiv.innerHTML = set.photos.map(p =>
+    `<img src="${p}" style="max-height:260px;max-width:340px;border-radius:8px;object-fit:cover;cursor:zoom-in;" alt="${set.title}">`
+  ).join('');
+  lb.addEventListener('click', e => { if (e.target === lb) lb.remove(); });
+}
+
+loadGallery();
+
+/* ── Developer režim — Varianta C (gesto + SHA-256) ── */
+// Hash hesla "zdever2025": 2131b0d181c34ef2343a2e71f631a637463c35bd58f7ade3a79d77fc76be9519
+// Změnit heslo: spusť v konzoli:
+//   crypto.subtle.digest('SHA-256', new TextEncoder().encode('NOVÉ_HESLO'))
+//     .then(b => console.log([...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('')))
+// a výsledek vlož jako DEV_HASH:
+const DEV_HASH = '2131b0d181c34ef2343a2e71f631a637463c35bd58f7ade3a79d77fc76be9519';
+
+let devMode = false;
+let logoClickCount = 0;
+let logoClickTimer = null;
+
+/* Gesto: 5× klik na logo */
+(function initDevGesture() {
+  document.querySelectorAll('.logo-wm, .sb-logo').forEach(logo => {
+    logo.addEventListener('click', () => {
+      logoClickCount++;
+      clearTimeout(logoClickTimer);
+      logoClickTimer = setTimeout(() => { logoClickCount = 0; }, 2000);
+      if (logoClickCount >= 5) {
+        logoClickCount = 0;
+        devMode ? deactivateDevMode() : showDevInput();
+      }
+    });
+  });
+})();
+
+function showDevInput() {
+  if (document.getElementById('dev-input-overlay')) return;
+  const overlay = document.createElement('div');
+  overlay.id = 'dev-input-overlay';
+  overlay.style.cssText = 'position:fixed;bottom:80px;right:20px;z-index:9999;background:#1C2A4A;border-radius:12px;padding:14px 16px;box-shadow:0 8px 32px rgba(0,0,0,.4);display:flex;gap:8px;align-items:center;';
+  overlay.innerHTML = `
+    <input id="dev-pwd-input" type="password" placeholder="🔐 Dev heslo"
+      style="padding:8px 12px;border:1px solid rgba(255,255,255,.2);border-radius:8px;background:rgba(255,255,255,.08);color:#fff;font-size:14px;outline:none;width:160px;">
+    <button onclick="checkDevPassword()" style="padding:8px 14px;background:#4A7CC7;color:#fff;border:none;border-radius:8px;cursor:pointer;font-size:14px;">→</button>
+    <button onclick="document.getElementById('dev-input-overlay').remove()" style="padding:8px;background:none;color:rgba(255,255,255,.5);border:none;cursor:pointer;font-size:16px;">✕</button>
+  `;
+  document.body.appendChild(overlay);
+  const input = document.getElementById('dev-pwd-input');
+  input.focus();
+  input.addEventListener('keydown', e => { if (e.key === 'Enter') checkDevPassword(); });
+}
+
+async function checkDevPassword() {
+  const input = document.getElementById('dev-pwd-input');
+  if (!input) return;
+  const hash = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(input.value));
+  const hashHex = [...new Uint8Array(hash)].map(x => x.toString(16).padStart(2, '0')).join('');
+  if (hashHex === DEV_HASH) {
+    document.getElementById('dev-input-overlay')?.remove();
+    activateDevMode();
+  } else {
+    input.style.borderColor = '#c92a2a';
+    input.value = '';
+    input.placeholder = '❌ Špatné heslo';
+    setTimeout(() => { input.placeholder = '🔐 Dev heslo'; input.style.borderColor = 'rgba(255,255,255,.2)'; }, 2000);
+  }
+}
+
+function activateDevMode() {
+  devMode = true;
+  document.body.classList.add('dev-mode');
+  document.getElementById('dev-banner').style.display = 'block';
+  document.getElementById('dev-gallery-panel').style.display = 'block';
+  renderDevReviewPanel();
+}
+
+function deactivateDevMode() {
+  devMode = false;
+  document.body.classList.remove('dev-mode');
+  document.getElementById('dev-banner').style.display = 'none';
+  document.getElementById('dev-gallery-panel').style.display = 'none';
+  document.getElementById('dev-reviews-panel')?.remove();
+}
+
+/* F1 fallback (desktop) */
+document.addEventListener('keydown', e => {
+  if (e.key === 'F1') {
+    e.preventDefault();
+    devMode ? deactivateDevMode() : showDevInput();
   }
 });
 
-/* ── Fotky — dev přidávání ── */
-function devFotoInfo(index) {
-  if (!devMode) return;
-  const filename = 'src/images/foto-' + index + '.jpg';
-  alert('📁 Jak přidat fotku:\n\n1. Připrav fotku (JPG nebo PNG)\n2. Přejmenuj ji na: foto-' + index + '.jpg\n3. Nahraj ji na GitHub do složky: src/images/\n4. Po nahrání (commitnutí) bude viditelná všem.\n\nCelá cesta: ' + filename);
-}
-
-function devHideFoto(index) {
-  if (!devMode) return;
-  if (!confirm('Skrýt tuto fotku? (Foto soubor zůstane na GitHubu — pro úplné smazání ho smažeš tam)')) return;
-  const card = document.getElementById('foto-' + index);
-  if (!card) return;
-  const img = card.querySelector('.foto-img');
-  const placeholder = card.querySelector('.foto-placeholder');
-  if (img) { img.style.display = 'none'; }
-  if (placeholder) { placeholder.style.display = 'flex'; }
-  const hidden = JSON.parse(localStorage.getItem('zdever_hidden_photos') || '[]');
-  if (!hidden.includes(index)) hidden.push(index);
-  localStorage.setItem('zdever_hidden_photos', JSON.stringify(hidden));
-}
-
-function devRestoreFoto(index) {
-  const card = document.getElementById('foto-' + index);
-  if (!card) return;
-  const img = card.querySelector('.foto-img');
-  if (img) { img.style.display = 'block'; }
-  const hidden = JSON.parse(localStorage.getItem('zdever_hidden_photos') || '[]');
-  localStorage.setItem('zdever_hidden_photos', JSON.stringify(hidden.filter(i => i !== index)));
-}
-
+/* DEV: foto funkce (zachováno pro About foto) */
 function devAboutInfo() {
   if (!devMode) return;
-  alert('📁 Jak přidat svoji fotku:\n\n1. Připrav fotku (JPG nebo PNG, ideálně na výšku)\n2. Přejmenuj ji na: technik.jpg\n3. Nahraj ji na GitHub do složky: src/images/\n4. Po nahrání (commitnutí) bude viditelná všem.\n\nCelá cesta: src/images/technik.jpg');
+  alert('📁 Nahraj soubor jako: src/images/technik.jpg na GitHub');
 }
-
-/* Načíst skryté fotky při startu */
-(function loadHiddenPhotos() {
   const hidden = JSON.parse(localStorage.getItem('zdever_hidden_photos') || '[]');
   hidden.forEach(index => {
     const card = document.getElementById('foto-' + index);
@@ -2157,7 +2401,7 @@ function devAboutInfo() {
 </div>
 
 <!-- DEV BANNER -->
-<div class="dev-banner" id="dev-banner">🛠 Developer režim aktivní — stiskni F1 pro vypnutí</div>
+<div class="dev-banner" id="dev-banner" style="display:none">🛠 Developer režim — 5× klikni na logo nebo F1 pro vypnutí</div>
 
 <!-- Skrytý file input pro fotky -->
 <input type="file" id="foto-input" accept="image/*" style="display:none" onchange="handleFotoUpload(event)">
