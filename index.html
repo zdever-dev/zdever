@@ -2029,8 +2029,8 @@ const REVIEWS_CONFIG = {
   // SQL: CREATE TABLE reviews (id serial primary key, name text not null, rating int2 not null, text text not null, date timestamptz default now(), approved bool default false);
   // RLS (Row Level Security): anon může SELECT kde approved = true, INSERT vše
   supabase: {
-    url: 'VLOZ_SUPABASE_URL',       // https://xxxxx.supabase.co
-    key: 'VLOZ_SUPABASE_ANON_KEY',  // eyJ...
+    url: 'https://kgeuogqgvmhqtfodzymm.supabase.co',       // https://xxxxx.supabase.co
+    key: 'sb_publishable_nJoOiBdyN6P11hd99U9D2w_1H9S-wgW',  // eyJ...
   },
 
   // Google Reviews placeholder (varianta C — vyžaduje Places API klíč)
@@ -2041,8 +2041,8 @@ const REVIEWS_CONFIG = {
 
   // Záložní recenze (vždy zobrazeny pokud Supabase selže nebo backend='local')
   fallback: [
-    { name: 'Jan N.',   rating: 5, text: 'Notebook byl po čištění jako nový. Rychlá oprava, férová cena.', date: '2025-10-15' },
-    { name: 'Marie K.', rating: 5, text: 'Pomohl mi přenést data na nový telefon. Doporučuji!',           date: '2025-11-02' },
+    { name: 'Jan N.',   rating: 5, text: 'Notebook byl po čištění jako nový. Rychlá oprava, férová cena. NEPRAVá RECENZE, FALLBACK PRO DEBUG', date: '2888-75-15' },
+    { name: 'Marie K.', rating: 5, text: 'Pomohl mi přenést data na nový telefon. Doporučuji! NEPRAVá RECENZE, FALLBACK PRO DEBUG',           date: '2888-11-541' },
   ]
 };
 
@@ -2050,7 +2050,7 @@ let reviews = [];
 let selectedRating = 0;
 
 async function loadReviews() {
-  if (REVIEWS_CONFIG.backend === 'supabase' && REVIEWS_CONFIG.supabase.url !== 'VLOZ_SUPABASE_URL') {
+  if (REVIEWS_CONFIG.backend === 'supabase' && REVIEWS_CONFIG.supabase.url !== 'https://kgeuogqgvmhqtfodzymm.supabase.co') {
     try {
       const res = await fetch(
         `${REVIEWS_CONFIG.supabase.url}/rest/v1/reviews_public?order=created_at.desc&limit=10`,
@@ -2121,7 +2121,7 @@ async function submitReview() {
   };
 
   let saved = false;
-  if (REVIEWS_CONFIG.backend === 'supabase' && REVIEWS_CONFIG.supabase.url !== 'VLOZ_SUPABASE_URL') {
+  if (REVIEWS_CONFIG.backend === 'supabase' && REVIEWS_CONFIG.supabase.url !== 'https://kgeuogqgvmhqtfodzymm.supabase.co') {
     try {
       const res = await fetch(`${REVIEWS_CONFIG.supabase.url}/rest/v1/reviews`, {
         method: 'POST',
@@ -2193,7 +2193,7 @@ function renderDevReviewPanel() {
         ${v==='local'?'Local (záloha)':v==='supabase'?'Supabase':'Google Reviews (brzy)'}
       </label>`).join('')}
     <div style="font-size:11px;color:rgba(255,255,255,.4);margin-top:6px;margin-bottom:10px;">
-      Supabase: ${REVIEWS_CONFIG.supabase.url==='VLOZ_SUPABASE_URL'?'❌ nenastaveno':'✅ OK'}
+      Supabase: ${REVIEWS_CONFIG.supabase.url==='https://kgeuogqgvmhqtfodzymm.supabase.co'?'❌ nenastaveno':'✅ OK'}
     </div>
     <button onclick="document.getElementById('dev-reviews-panel').remove()" style="padding:4px 12px;background:rgba(255,255,255,.1);border:none;color:#fff;border-radius:6px;cursor:pointer;font-size:11px;">Zavřít</button>
   `;
