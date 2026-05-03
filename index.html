@@ -2023,7 +2023,7 @@ document.addEventListener('click', (e) => {
 /* ── Reviews systém — Supabase (B) + přepínač v DEV ── */
 const REVIEWS_CONFIG = {
   // 'local' = hardcoded záloha | 'supabase' = živá DB
-  backend: 'local',
+  backend: 'supabase',
 
   // Supabase setup (zdarma na supabase.com):
   // SQL: CREATE TABLE reviews (id serial primary key, name text not null, rating int2 not null, text text not null, date timestamptz default now(), approved bool default false);
@@ -2050,7 +2050,7 @@ let reviews = [];
 let selectedRating = 0;
 
 async function loadReviews() {
-  if (REVIEWS_CONFIG.backend === 'supabase' && REVIEWS_CONFIG.supabase.url !== 'https://kgeuogqgvmhqtfodzymm.supabase.co') {
+  if (REVIEWS_CONFIG.backend === 'supabase' && REVIEWS_CONFIG.supabase.url !== 'VLOZ_SUPABASE_URL') {
     try {
       const res = await fetch(
         `${REVIEWS_CONFIG.supabase.url}/rest/v1/reviews_public?order=created_at.desc&limit=10`,
@@ -2121,7 +2121,7 @@ async function submitReview() {
   };
 
   let saved = false;
-  if (REVIEWS_CONFIG.backend === 'supabase' && REVIEWS_CONFIG.supabase.url !== 'https://kgeuogqgvmhqtfodzymm.supabase.co') {
+  if (REVIEWS_CONFIG.backend === 'supabase' && REVIEWS_CONFIG.supabase.url !== 'VLOZ_SUPABASE_URL') {
     try {
       const res = await fetch(`${REVIEWS_CONFIG.supabase.url}/rest/v1/reviews`, {
         method: 'POST',
@@ -2193,7 +2193,7 @@ function renderDevReviewPanel() {
         ${v==='local'?'Local (záloha)':v==='supabase'?'Supabase':'Google Reviews (brzy)'}
       </label>`).join('')}
     <div style="font-size:11px;color:rgba(255,255,255,.4);margin-top:6px;margin-bottom:10px;">
-      Supabase: ${REVIEWS_CONFIG.supabase.url==='https://kgeuogqgvmhqtfodzymm.supabase.co'?'❌ nenastaveno':'✅ OK'}
+      Supabase: ${REVIEWS_CONFIG.supabase.url==='VLOZ_SUPABASE_URL'?'❌ nenastaveno':'✅ OK'}
     </div>
     <button onclick="document.getElementById('dev-reviews-panel').remove()" style="padding:4px 12px;background:rgba(255,255,255,.1);border:none;color:#fff;border-radius:6px;cursor:pointer;font-size:11px;">Zavřít</button>
   `;
