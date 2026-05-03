@@ -974,6 +974,14 @@ footer::before {
             onfocus="this.style.borderColor='#4A7CC7'" onblur="this.style.borderColor='#d8dde8'">
           <div style="font-size:11px;color:var(--muted);margin-top:4px;">Slouží pouze k ověření oprávněnosti — nikdy se nezobrazí veřejně.</div>
         </div>
+        <div style="margin-bottom:12px;">
+          <label style="font-size:12px;font-weight:600;color:#1C2A4A;letter-spacing:1px;text-transform:uppercase;display:block;margin-bottom:6px;">
+            Lokalita <span style="color:var(--muted);font-weight:400">(nepovinné, zobrazí se veřejně)</span>
+          </label>
+          <input type="text" id="rev-location" placeholder="např. Znojmo, Jihomoravský kraj..."
+            style="width:100%;padding:10px 14px;border:1.5px solid #d8dde8;border-radius:8px;font-size:14px;outline:none"
+            onfocus="this.style.borderColor='#4A7CC7'" onblur="this.style.borderColor='#d8dde8'">
+        </div>
         <button onclick="submitReview()" style="width:100%;padding:13px;background:#1C2A4A;color:#fff;border:none;border-radius:10px;font-size:15px;font-weight:600;cursor:pointer">Odeslat recenzi</button>
         <div id="rev-success" style="display:none;margin-top:12px;background:#e8f4f0;color:#0a6a55;padding:10px 14px;border-radius:8px;font-size:13px;font-weight:600">✅ Recenze přidána!</div>
       </div>
@@ -2110,15 +2118,19 @@ async function submitReview() {
 
   // Rozlišit email vs telefon
   const isEmail = contact.includes('@');
-  const payload = {
-    name:        nameRaw,
-    review:      text,
-    star_rating: rating,
+const location = document.getElementById('rev-location')?.value.trim();
+
+const payload = {
+    name:         nameRaw,
+    review:       text,
+    star_rating:  rating,
     is_anonymous: isAnon,
-    email:       isEmail ? contact : null,
-    phonenumber: !isEmail ? contact : null,
-    location:    document.getElementById('rev-location')?.value.trim() || null,
-  };
+    ...(isEmail
+        ? { email: contact }
+        : { phonenumber: contact }
+    ),
+    ...(location ? { location } : {}),
+};
 
   let saved = false;
   if (REVIEWS_CONFIG.backend === 'supabase' && REVIEWS_CONFIG.supabase.url !== 'VLOZ_SUPABASE_URL') {
